@@ -83,6 +83,7 @@ int main()
 
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
+
     // check for shader compile errors
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 
@@ -97,12 +98,15 @@ int main()
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
+    
     // check for linking errors
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    
     if (!success) {
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
+
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
@@ -117,6 +121,7 @@ int main()
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
 
@@ -134,7 +139,6 @@ int main()
     // bind the VAO (it was already bound, but just to demonstrate): seeing as we only have a single VAO we can 
     // just bind it beforehand before rendering the respective triangle; this is another approach.
     glBindVertexArray(VAO);
-
 
     // render loop
     // -----------
@@ -155,6 +159,7 @@ int main()
         // update shader uniform
         float timeValue = glfwGetTime();
         float greenValue = sin(timeValue) / 2.0f + 0.5f;
+        
         int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
